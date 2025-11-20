@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://crghgtcjgfi41"]
+
+[ext_resource type="Script" uid="uid://djuvpfiophum" path="res://enemy_a_star.gd" id="1_djgpo"]
+[ext_resource type="Texture2D" uid="uid://i3t5pkuin553" path="res://Art/player_tilemap.png" id="1_nfsfc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjmsk"]
+atlas = ExtResource("1_nfsfc")
+region = Rect2(75, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djgpo"]
+atlas = ExtResource("1_nfsfc")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ha3vn"]
+atlas = ExtResource("1_nfsfc")
+region = Rect2(25, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dptd7"]
+atlas = ExtResource("1_nfsfc")
+region = Rect2(50, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3mgt2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjmsk")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djgpo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ha3vn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dptd7")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nfsfc"]
+
+[node name="EnemyA*" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("1_djgpo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_3mgt2")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_nfsfc")

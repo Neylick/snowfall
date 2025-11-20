@@ -1,3 +1,44 @@
-[gd_scene format=3 uid="uid://cqow47bch5ocs"]
+[gd_scene load_steps=4 format=3 uid="uid://cqow47bch5ocs"]
+
+[ext_resource type="PackedScene" uid="uid://wgduivux633w" path="res://map.tscn" id="1_h2yge"]
+[ext_resource type="Shader" uid="uid://doda2r7yckfpx" path="res://water.gdshader" id="3_h2yge"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0xm2m"]
+shader = ExtResource("3_h2yge")
 
 [node name="Main" type="Node2D"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.3491902, 0.3491902, 0.3491902, 1)
+
+[node name="Map" parent="." instance=ExtResource("1_h2yge")]
+z_index = -1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
+color = Color(0.3491902, 0.3491902, 0.3491902, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = -0.033854168
+anchor_top = -0.043209877
+anchor_right = 0.018229166
+anchor_bottom = 0.024691358
+offset_right = 1151.0
+offset_bottom = 646.0
+color = Color(0.8117647, 0.90588236, 0.96862745, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_0xm2m")
+anchors_preset = -1
+anchor_left = -0.033854168
+anchor_top = -0.043209877
+anchor_right = 0.018229166
+anchor_bottom = 0.024691358
+offset_right = 1151.0
+offset_bottom = 646.0
+color = Color(0.8117647, 0.90588236, 0.96862745, 1)
+metadata/_edit_use_anchors_ = true
