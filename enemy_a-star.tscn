@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://crghgtcjgfi41"]
+[gd_scene load_steps=11 format=3 uid="uid://crghgtcjgfi41"]
 
 [ext_resource type="Script" uid="uid://djuvpfiophum" path="res://enemy_a_star.gd" id="1_djgpo"]
 [ext_resource type="Texture2D" uid="uid://i3t5pkuin553" path="res://Art/player_tilemap.png" id="1_nfsfc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nfsfc"]
+size = Vector2(7, 7)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjmsk"]
 atlas = ExtResource("1_nfsfc")
@@ -49,16 +52,38 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nfsfc"]
+[sub_resource type="Gradient" id="Gradient_djgpo"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_djgpo"]
+gradient = SubResource("Gradient_djgpo")
+width = 500
+height = 500
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7905983, 0.16239317)
 
 [node name="EnemyA*" type="CharacterBody2D" groups=["enemy"]]
+z_index = -1
 script = ExtResource("1_djgpo")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_nfsfc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
 texture_filter = 1
+position = Vector2(-0.5, -5.5)
 sprite_frames = SubResource("SpriteFrames_3mgt2")
 animation = &"walk"
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_nfsfc")
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -10)
+color = Color(0.92629945, 2.5027991e-06, 1.540184e-06, 1)
+energy = 0.2
+range_z_min = -512
+range_z_max = 512
+texture = SubResource("GradientTexture2D_djgpo")
+texture_scale = 0.5
+metadata/_edit_lock_ = true

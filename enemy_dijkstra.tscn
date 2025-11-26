@@ -1,0 +1,90 @@
+[gd_scene load_steps=11 format=3 uid="uid://cruvhdnr0qtim"]
+
+[ext_resource type="Texture2D" uid="uid://i3t5pkuin553" path="res://Art/player_tilemap.png" id="1_e8dkf"]
+[ext_resource type="Script" uid="uid://mwpnskpfxfl2" path="res://enemy_dijkstra.gd" id="1_kkcna"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3a2w4"]
+size = Vector2(5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkcna"]
+atlas = ExtResource("1_e8dkf")
+region = Rect2(75, 25, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cld71"]
+atlas = ExtResource("1_e8dkf")
+region = Rect2(0, 25, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j04r8"]
+atlas = ExtResource("1_e8dkf")
+region = Rect2(25, 25, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1wb0"]
+atlas = ExtResource("1_e8dkf")
+region = Rect2(50, 25, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3a2w4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kkcna")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cld71")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j04r8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1wb0")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_onrkg"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e8dkf"]
+gradient = SubResource("Gradient_onrkg")
+width = 500
+height = 500
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7905983, 0.16239317)
+
+[node name="EnemyDijkstra" type="CharacterBody2D"]
+z_index = -1
+script = ExtResource("1_kkcna")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -8)
+shape = SubResource("RectangleShape2D_3a2w4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
+texture_filter = 1
+position = Vector2(0.5, -4.5)
+sprite_frames = SubResource("SpriteFrames_3a2w4")
+animation = &"walk"
+frame_progress = 0.06701806
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -10)
+color = Color(0.92629945, 2.5027991e-06, 1.540184e-06, 1)
+energy = 0.2
+range_z_min = -512
+range_z_max = 512
+texture = SubResource("GradientTexture2D_e8dkf")
+texture_scale = 0.5
+metadata/_edit_lock_ = true

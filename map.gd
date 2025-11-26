@@ -1,25 +1,39 @@
 extends TileMapLayer
 
-@export var INITIAL_SIZE = 50
+@export var SIZE = 50
+@onready var center = Vector2(SIZE/2.0, SIZE/2.0)
 var frame_count = 0
+
+func is_cell_erased(coord : Vector2i):
+	return (get_cell_source_id(coord) == -1 and get_cell_atlas_coords(coord) == Vector2i(-1,-1) and get_cell_alternative_tile(coord) == -1)
+
+func global_to_map(coord : Vector2) -> Vector2i :
+	return Vector2i(coord + center * Vector2(tile_set.tile_size)) / tile_set.tile_size
+
+func map_to_global(coord : Vector2) -> Vector2i :
+	return Vector2i(coord - center) * tile_set.tile_size
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var center = Vector2(INITIAL_SIZE/2.0, INITIAL_SIZE/2.0)
+	position -= center * Vector2(tile_set.tile_size)
 	var cell_arr : Array[Vector2i]
-	for i in INITIAL_SIZE:
-		for j in INITIAL_SIZE:
+	for i in SIZE:
+		for j in SIZE:
 			var point = Vector2(i, j)
-			if(point.distance_to(center) <= INITIAL_SIZE/2.0):
-				#set_cell(Vector2i(point), 0, Vector2(0,0))
+			if(point.distance_to(center) <= SIZE/2.0):
 				cell_arr.append(Vector2i(point))
 	set_cells_terrain_connect(cell_arr, 0, 0, false)
+	
+func remove_terrain(coords : Vector2i):
+	var neighboors = get_surrounding_cells(coords)
+	erase_cell(coords)
+	set_cells_terrain_connect(neighboors, 0, -1, false)
 
 
 func _process(_delta: float) -> void:
 	frame_count+=1
-	if(frame_count % 3000):
-		var rand_cell = Vector2i(int(randf()*INITIAL_SIZE), int(randf()*INITIAL_SIZE))
-		var neighboors = get_surrounding_cells(rand_cell)
-		erase_cell(rand_cell)
-		set_cells_terrain_connect(neighboors, 0, -1, true)
+	if((frame_count % 20) == 0):
+		print("Eroding terrain")
+		var rand_cell = Vector2i(int(randf()*SIZE), int(randf()*SIZE))
+		remove_terrain(rand_cell)
+		

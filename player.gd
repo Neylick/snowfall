@@ -4,7 +4,8 @@ extends CharacterBody2D
 
 var push_dir
 var was_pushed
-@export var PUSH_STRENGH = 100.0
+@export var PUSH_STRENGH = 20.0
+@onready var anim_sprite = $CollisionShape2D/AnimatedSprite2D
 
 func get_pushed(dir):
 	was_pushed = true
@@ -18,14 +19,14 @@ func _physics_process(_delta: float) -> void:
 	if direction:
 		direction = direction.normalized()
 		velocity = direction * SPEED
-		$AnimatedSprite2D.play("walk")
-		$AnimatedSprite2D.flip_h = velocity.x < 0
+		anim_sprite.play("walk")
+		anim_sprite.flip_h = velocity.x < 0
 	else:
 		velocity = Vector2(move_toward(velocity.x, 0, SPEED), move_toward(velocity.y, 0, SPEED))
-		$AnimatedSprite2D.play("idle")
+		anim_sprite.play("idle")
 		
 	if(was_pushed):
 		was_pushed = false
-		velocity = push_dir * PUSH_STRENGH
+		velocity += push_dir * PUSH_STRENGH
 
 	move_and_slide()
