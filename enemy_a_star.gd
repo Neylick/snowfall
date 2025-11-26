@@ -1,10 +1,13 @@
-extends CharacterBody2D
+extends Enemy
 
 const SPEED = 1.0
 @onready var anim_sprite = $CollisionShape2D/AnimatedSprite2D
-@onready var Map = $"/root/Map"
 
-var current_path : Array[Vector2i]
+func _physics_process(_delta: float) -> void:
+	frame_count+=1
+	if((frame_count % 20) == 0): 
+		recalculate_path()
+	queue_redraw()
 	
 func get_lowest_cost(open_list : Dictionary, fscore : Dictionary):
 	var min_v = 1e30
@@ -53,31 +56,4 @@ func recalculate_path():
 				fscore[y] = y_cost + y.distance_squared_to(destination)
 				if(!open_list.has(y) && !Map.is_cell_erased(y)):
 					open_list[y] = y_cost
-
-func _physics_process(_delta: float) -> void:
-	#var direction = ($"/root/Player".position - position)
-	#var distance_to_player =  direction.length()
-	#if direction:
-		#velocity = (direction / distance_to_player) * SPEED
-		#anim_sprite.play("walk")
-		#anim_sprite.flip_h = velocity.x < 0
-	#else:
-		#anim_sprite.play("idle")
-#
-	#var collision = move_and_collide(velocity)
-	#if collision and collision.get_collider() and collision.get_collider().is_in_group("player"):
-		#collision.get_collider().get_pushed(direction)
-		
-	recalculate_path()
-	queue_redraw()
-	
-func _draw() -> void:
-	var start = position
-	var destination = $"/root/Player".position
-	draw_line(start - position, destination - position, Color.RED)
-	
-	var drawable_path : Array[Vector2]
-	for p in current_path:
-		drawable_path.push_back(Vector2(Map.map_to_global(p)) - position)
-	draw_polyline(drawable_path, Color.AQUA)
 	

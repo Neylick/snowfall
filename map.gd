@@ -5,13 +5,13 @@ extends TileMapLayer
 var frame_count = 0
 
 func is_cell_erased(coord : Vector2i):
-	return (get_cell_source_id(coord) == -1 and get_cell_atlas_coords(coord) == Vector2i(-1,-1) and get_cell_alternative_tile(coord) == -1)
+	return get_cell_source_id(coord) == -1 || get_cell_tile_data(coord) == null
 
 func global_to_map(coord : Vector2) -> Vector2i :
 	return Vector2i(coord + center * Vector2(tile_set.tile_size)) / tile_set.tile_size
 
-func map_to_global(coord : Vector2) -> Vector2i :
-	return Vector2i(coord - center) * tile_set.tile_size
+func map_to_global(coord : Vector2) -> Vector2 :
+	return (coord - center) * Vector2(tile_set.tile_size)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,10 +25,9 @@ func _ready() -> void:
 	set_cells_terrain_connect(cell_arr, 0, 0, false)
 	
 func remove_terrain(coords : Vector2i):
-	var neighboors = get_surrounding_cells(coords)
 	erase_cell(coords)
-	set_cells_terrain_connect(neighboors, 0, -1, false)
-
+	#var neighboors = get_surrounding_cells(coords)
+	#set_cells_terrain_connect(neighboors, 0, -1, false)
 
 func _process(_delta: float) -> void:
 	frame_count+=1
