@@ -1,12 +1,9 @@
-extends CharacterBody2D
+extends Enemy
 
-const SPEED = 1.0
-@onready var anim_sprite = $CollisionShape2D/AnimatedSprite2D
-@onready var Map = $"/root/Map"
+func _ready() -> void:
+	color = Color.AQUAMARINE
+	anim_sprite = $CollisionShape2D/AnimatedSprite2D
 
-var current_path : Array[Vector2i]
-var frame_count = 0
-	
 func get_lowest_cost(open_list : Dictionary, gscore : Dictionary):
 	var min_v = 1e30
 	var min_key = Vector2i(-1e30, -1e30)
@@ -21,6 +18,7 @@ func reroute(node_coord, start, closed_list):
 	while node_coord != start:
 		current_path.push_front(node_coord)
 		node_coord = closed_list[node_coord]
+	current_path.push_front(start)
 
 func recalculate_path():
 	var start = Map.global_to_map(position)
@@ -51,10 +49,4 @@ func recalculate_path():
 				gscore[y] = y_cost
 				if(!open_list.has(y) && !Map.is_cell_erased(y)):
 					open_list[y] = y_cost
-
-func _physics_process(_delta: float) -> void:
-	frame_count+=1
-	if((frame_count % 20) == 0): 
-		recalculate_path()
-	queue_redraw()
 	

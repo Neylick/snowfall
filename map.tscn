@@ -1,9 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://wgduivux633w"]
+[gd_scene load_steps=7 format=3 uid="uid://wgduivux633w"]
 
 [ext_resource type="Script" uid="uid://u3g3ke4lky58" path="res://map.gd" id="1_c7s6e"]
 [ext_resource type="TileSet" uid="uid://0j10gx6akpxu" path="res://TileSet/tileset.tres" id="1_wijl4"]
+[ext_resource type="Texture2D" uid="uid://e5l4eol4wxu6" path="res://Art/tile_0003.png" id="3_e0an3"]
+[ext_resource type="Script" uid="uid://4eyrqb70ewxv" path="res://water_layer.gd" id="4_p5pve"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p5pve"]
+texture = ExtResource("3_e0an3")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+
+[sub_resource type="TileSet" id="TileSet_wijl4"]
+physics_layer_0/collision_layer = 4
+sources/0 = SubResource("TileSetAtlasSource_p5pve")
 
 [node name="Map" type="TileMapLayer"]
 z_index = -3
 tile_set = ExtResource("1_wijl4")
 script = ExtResource("1_c7s6e")
+
+[node name="WaterLayer" type="TileMapLayer" parent="." groups=["water"]]
+z_index = -4
+tile_set = SubResource("TileSet_wijl4")
+script = ExtResource("4_p5pve")

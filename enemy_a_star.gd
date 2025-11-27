@@ -1,14 +1,9 @@
 extends Enemy
 
-const SPEED = 1.0
-@onready var anim_sprite = $CollisionShape2D/AnimatedSprite2D
+func _ready() -> void:
+	color = Color.AQUA
+	anim_sprite = $CollisionShape2D/AnimatedSprite2D
 
-func _physics_process(_delta: float) -> void:
-	frame_count+=1
-	if((frame_count % 20) == 0): 
-		recalculate_path()
-	queue_redraw()
-	
 func get_lowest_cost(open_list : Dictionary, fscore : Dictionary):
 	var min_v = 1e30
 	var min_key = Vector2i(-1e30, -1e30)
@@ -23,6 +18,7 @@ func reroute(node_coord, start, closed_list):
 	while node_coord != start:
 		current_path.push_front(node_coord)
 		node_coord = closed_list[node_coord]
+	current_path.push_front(start)
 
 func recalculate_path():
 	var start = Map.global_to_map(position)

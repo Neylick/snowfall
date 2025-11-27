@@ -2,6 +2,7 @@ extends TileMapLayer
 
 @export var SIZE = 50
 @onready var center = Vector2(SIZE/2.0, SIZE/2.0)
+@onready var WaterMap = $WaterLayer
 var frame_count = 0
 
 func is_cell_erased(coord : Vector2i):
@@ -22,10 +23,13 @@ func _ready() -> void:
 			var point = Vector2(i, j)
 			if(point.distance_to(center) <= SIZE/2.0):
 				cell_arr.append(Vector2i(point))
+			else:
+				WaterMap.set_cell(point, 0, Vector2(0,0))
 	set_cells_terrain_connect(cell_arr, 0, 0, false)
 	
 func remove_terrain(coords : Vector2i):
 	erase_cell(coords)
+	WaterMap.set_cell(coords, 0, Vector2(0,0))
 	#var neighboors = get_surrounding_cells(coords)
 	#set_cells_terrain_connect(neighboors, 0, -1, false)
 
