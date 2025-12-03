@@ -26,6 +26,7 @@ separation = Vector2i(1, 1)
 1:0/1 = 1
 1:0/1/transpose = true
 1:0/1/terrain_set = 0
+1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 2, 8, 2, 8, 8, -8, 8)
 1:0/1/terrains_peering_bit/top_left_corner = 0
 1:0/1/terrains_peering_bit/top_side = 0
 1:0/1/terrains_peering_bit/top_right_corner = 0
@@ -45,6 +46,7 @@ separation = Vector2i(1, 1)
 4:0/1 = 1
 4:0/1/transpose = true
 4:0/1/terrain_set = 0
+4:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -2, 8, -2, 8, -8, -8, -8)
 4:0/1/terrains_peering_bit/bottom_right_corner = 0
 4:0/1/terrains_peering_bit/bottom_side = 0
 4:0/1/terrains_peering_bit/bottom_left_corner = 0
@@ -339,7 +341,8 @@ separation = Vector2i(1, 1)
 11:10/0 = 0
 
 [resource]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 4
+physics_layer_0/collision_mask = 0
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)

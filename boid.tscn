@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bb3xi17314jnc"]
+[gd_scene load_steps=9 format=3 uid="uid://bb3xi17314jnc"]
 
 [ext_resource type="Script" uid="uid://c3yx5qumvhe2r" path="res://boid.gd" id="1_rwlh6"]
 [ext_resource type="Texture2D" uid="uid://es31y10goxsp" path="res://Art/tilemap-characters.png" id="1_xur1n"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_rwlh6"]
+radius = 43.011627
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_xur1n"]
-radius = 6.0827627
+radius = 6.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rwlh6"]
 atlas = ExtResource("1_xur1n")
@@ -40,6 +43,14 @@ collision_layer = 8
 collision_mask = 8
 script = ExtResource("1_rwlh6")
 
+[node name="DetectOtherArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectOtherArea"]
+shape = SubResource("CircleShape2D_rwlh6")
+debug_color = Color(1, 1, 1, 0.41960785)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xur1n")
 
@@ -47,7 +58,8 @@ shape = SubResource("CircleShape2D_xur1n")
 texture_filter = 1
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_7x0tw")
+autoplay = "default"
 frame_progress = 0.39168775
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="area_entered" from="DetectOtherArea" to="." method="_on_detect_other_area_entered"]
+[connection signal="area_exited" from="DetectOtherArea" to="." method="_on_detect_other_area_exited"]

@@ -1,22 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqow47bch5ocs"]
+[gd_scene load_steps=9 format=3 uid="uid://cqow47bch5ocs"]
 
+[ext_resource type="Script" uid="uid://x2tslg27woxf" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="PackedScene" uid="uid://crghgtcjgfi41" path="res://enemy_a-star.tscn" id="2_1bvp3"]
 [ext_resource type="Shader" uid="uid://doda2r7yckfpx" path="res://water.gdshader" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cruvhdnr0qtim" path="res://enemy_dijkstra.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://xoofn37uncet" path="res://hud.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://player.tscn" id="4_7mycd"]
+[ext_resource type="PackedScene" uid="uid://bb3xi17314jnc" path="res://boid.tscn" id="7_272bh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0xm2m"]
 shader = ExtResource("3_h2yge")
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_lquwl")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.3491902, 0.3491902, 0.3491902, 1)
 
 [node name="EnemyA*" parent="." instance=ExtResource("2_1bvp3")]
-position = Vector2(-100, -143)
+position = Vector2(-22, -89)
 
 [node name="EnemyDijkstra" parent="." instance=ExtResource("3_lquwl")]
 position = Vector2(106, -143)
+
+[node name="Player" parent="." instance=ExtResource("4_7mycd")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -49,3 +56,22 @@ offset_bottom = 646.0
 color = Color(0.8117647, 0.90588236, 0.96862745, 1)
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
+
+[node name="Boid" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(71, -43)
+
+[node name="Boid2" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(107, -39)
+
+[node name="Boid3" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(90, -33)
+
+[node name="Boid4" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(69, -59)
+
+[node name="Boid5" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(94, -72)
+
+[connection signal="on_game_over" from="Player" to="." method="game_over"]

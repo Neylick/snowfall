@@ -20,9 +20,9 @@ func reroute(node_coord, start, closed_list):
 		node_coord = closed_list[node_coord]
 	current_path.push_front(start)
 
-func recalculate_path():
+func recalculate_path(dest):
 	var start = Map.global_to_map(position)
-	var destination = Map.global_to_map($"/root/Player".position)
+	var _destination = Map.global_to_map(dest)
 	var open_list = {}
 	var came_from = {}
 	var gscore = {}
@@ -33,7 +33,7 @@ func recalculate_path():
 	while !open_list.is_empty(): 
 		var x = get_lowest_cost(open_list, gscore)
 		# 2.1 : the cell is the end, reroute back
-		if(x == destination): 
+		if(x == _destination): 
 			reroute(x, start, came_from)
 			
 		# 2.2 we checked this node 

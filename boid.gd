@@ -1,30 +1,46 @@
 extends Area2D
 
-@export var close_str = 100
-@export var with_str = 40
-@export var min_dist = 20
-@export var away_str = 5
+@onready var Player = $"/root/Main/Player"
 
-var close_boids
+@export var max_velocity = .5
+@export var min_dist = 2.0
+@export var close_str = 50.0
+@export var away_str = 3.0
+@export var with_str = 20.0
+
+var close_boids = []
 var velocity = Vector2(0,0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	#velocity = Vector2(randf(), randf())
+	velocity = (Player.position - position).normalized()
+	
+func _draw() -> void:
+	draw_line(Vector2(0,0), velocity * 10.0, Color.RED)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	moveCloser(close_str)
 	moveWith(with_str)
 	moveAway(min_dist, away_str)
+	
+	if(velocity.length() > max_velocity): 
+		velocity = velocity.normalized() * max_velocity
+	
+	position += velocity
+	
+	queue_redraw()
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_detect_other_area_entered(area: Area2D) -> void:
 	if(area.is_in_group("boids")):
-		close_boids.append(area.get_parent())
+		close_boids.append(area)
+		#print("ADDED BOID")
 
-func _on_area_exited(area: Area2D) -> void:
+func _on_detect_other_area_exited(area: Area2D) -> void:
 	if(area.is_in_group("boids")):
-		close_boids.erase(area.get_parent())
+		close_boids.erase(area)
+		#print("RM BOID")
 
 func moveCloser(strength):
 	if len(close_boids) < 1: return
@@ -51,10 +67,10 @@ func moveAway(minDistance, strength):
 	var distance = Vector2(0, 0)
 	var numClose = 0
 	for boid in close_boids :
-		distance = position.distance_to(boid.position)
-		if distance < minDistance :
+		var d = position.distance_to(boid.position)
+		if d < minDistance :
 			numClose += 1
-			var diff = (position.x - boid.position.x)
+			var diff = (position - boid.position)
 			if diff.x >= 0: diff.x = sqrt( minDistance ) - diff.x
 			else: diff.x = -sqrt( minDistance ) - diff.x
 			if diff.y >= 0: diff.y = sqrt( minDistance ) - diff.y

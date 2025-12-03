@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://xoofn37uncet"]
+
+[ext_resource type="Script" uid="uid://bar2lklnt38uu" path="res://hud.gd" id="1_8sq4i"]
+[ext_resource type="Texture2D" uid="uid://b24pr6pi1e4dm" path="res://Art/UI/GAME_OVER.png" id="1_37p78"]
+[ext_resource type="Texture2D" uid="uid://dci8hypxwub3x" path="res://Art/UI/START.png" id="1_64ctp"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_8sq4i")
+
+[node name="HUDTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="StartSprite" type="Sprite2D" parent="Control"]
+visible = false
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_64ctp")
+
+[node name="GameOverSprite" type="Sprite2D" parent="Control"]
+visible = false
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_37p78")
+
+[connection signal="timeout" from="HUDTimer" to="." method="_on_hud_timer_timeout"]
