@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Enemy
 @export var SPEED = 85.0
-@export var VIEW_DIST = 100
+@export var VIEW_DIST = 150
 @export var PATROL_DIST = 10
 @onready var Map = $"/root/Map"
 @onready var Player = $"/root/Main/Player"
@@ -29,7 +29,7 @@ func _draw() -> void:
 			drawable_path.push_back(Map.map_to_global(Vector2(p) + Vector2(.5, .5)) - position)
 		draw_polyline(drawable_path, color)
 
-func recalculate_path(destination):
+func recalculate_path(_dest):
 	pass
 	
 func update_direction():

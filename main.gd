@@ -9,7 +9,7 @@ extends Node2D
 
 func get_random_spawn() -> Vector2:
 	var res = Vector2i(0,0)
-	while res.distance_squared_to(Vector2i(0,0)) <= 3:
+	while res.distance_squared_to(Vector2i(0,0)) <= 3 || !Map.is_cell_walkable(res):
 		res = Vector2i(randf() * Map.SIZE, randf() * Map.SIZE) 
 	return res
 

@@ -60,18 +60,27 @@ metadata/_edit_lock_ = true
 [node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
 
 [node name="Boid" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(71, -43)
+position = Vector2(56, -46)
 
 [node name="Boid2" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(107, -39)
+position = Vector2(93, -57)
 
 [node name="Boid3" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(90, -33)
+position = Vector2(113, -18)
 
 [node name="Boid4" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(69, -59)
+position = Vector2(66, -95)
 
 [node name="Boid5" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(94, -72)
+position = Vector2(121, -85)
+
+[node name="Boid6" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(119, -126)
+
+[node name="Boid7" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(174, -55)
+
+[node name="Boid8" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(177, -107)
 
 [connection signal="on_game_over" from="Player" to="." method="game_over"]

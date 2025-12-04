@@ -50,6 +50,6 @@ func recalculate_path(dest):
 				came_from[y] = x
 				gscore[y] = y_cost
 				fscore[y] = y_cost + y.distance_squared_to(_destination)
-				if(!open_list.has(y) && !Map.is_cell_erased(y)):
+				if(!open_list.has(y) && Map.is_cell_walkable(y)):
 					open_list[y] = y_cost
 	

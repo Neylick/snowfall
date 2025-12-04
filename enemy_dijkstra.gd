@@ -47,6 +47,6 @@ func recalculate_path(dest):
 			if(!gscore.has(y) || y_cost < gscore[y]):
 				came_from[y] = x
 				gscore[y] = y_cost
-				if(!open_list.has(y) && !Map.is_cell_erased(y)):
+				if(!open_list.has(y) && Map.is_cell_walkable(y)):
 					open_list[y] = y_cost
 	

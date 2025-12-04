@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 var push_dir = Vector2(0,0)
 var was_pushed = false
-@export var PUSH_STRENGH = 500.0
+@export var PUSH_STRENGH = 700.0
 @onready var anim_sprite = $CollisionShape2D/AnimatedSprite2D
 
 signal on_game_over
