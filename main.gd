@@ -2,19 +2,32 @@ extends Node2D
 
 @onready var HUD = $HUD
 @onready var Map = $"/root/Map"
-@onready var Player = $"/root/Main/Player"
+@onready var Player = $"Player"
+@onready var BoidsManager = $"BoidsManager"
 
 @onready var EnemyAStar = $"EnemyA*"
 @onready var EnemyDijkstra = $"EnemyDijkstra"
 
-func get_random_spawn() -> Vector2:
-	var res = Vector2i(0,0)
-	while res.distance_squared_to(Vector2i(0,0)) <= 3 || !Map.is_cell_walkable(res):
-		res = Vector2i(randf() * Map.SIZE, randf() * Map.SIZE) 
-	return res
+@onready var Canvas = $CanvasModulate
+@onready var BkgCanvas = $CanvasLayer/CanvasModulate
+@onready var canvas_default_c = Canvas.color
+
+func _ready():
+	prep_game()
+
+func darken():
+	if($DarkenTimer.is_stopped()):
+		$DarkenTimer.start()
+		Canvas.color = Color()
+		BkgCanvas.color = Color()
+		Player.light.texture_scale *= 3./4.
+		await  $DarkenTimer.timeout
+		Canvas.color = canvas_default_c
+		BkgCanvas.color = canvas_default_c
+		Player.light.texture_scale /= 3./4.
 
 func reset_enemy(e):
-	e.position = Map.map_to_global(get_random_spawn())
+	e.position = Map.map_to_global(Map.get_random_spawn())
 	e.current_path.clear()
 	e.frame_count = 0
 	e.direction = Vector2()
@@ -31,17 +44,24 @@ func prep_game():
 	# reset enemies
 	reset_enemy(EnemyAStar)
 	reset_enemy(EnemyDijkstra)
+	# reset boids
+	BoidsManager.reset_boids()
 	
 func start_game():
 	Player.has_control = true
 
 func game_over():
-	print("Game over !")
+	if(not $DarkenTimer.is_stopped()):
+		$DarkenTimer.stop()
+		Canvas.color = canvas_default_c
+		BkgCanvas.color = canvas_default_c
+		Player.light.texture_scale *= 1.5
+	#print("Game over !")
 	HUD.game_over()
 	await HUD.timer_over
-	print("Starting again !")
+	#print("Starting again !")
 	prep_game()
 	HUD.start()
 	await HUD.timer_over
-	print("Start !")
+	#print("Start !")
 	start_game()

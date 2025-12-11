@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cruvhdnr0qtim" path="res://enemy_dijkstra.tscn" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://xoofn37uncet" path="res://hud.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://player.tscn" id="4_7mycd"]
-[ext_resource type="PackedScene" uid="uid://bb3xi17314jnc" path="res://boid.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://dam8xsu8ygkm4" path="res://boids_manager.tscn" id="7_272bh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0xm2m"]
 shader = ExtResource("3_h2yge")
@@ -14,8 +14,12 @@ shader = ExtResource("3_h2yge")
 [node name="Main" type="Node2D"]
 script = ExtResource("1_lquwl")
 
+[node name="DarkenTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.3491902, 0.3491902, 0.3491902, 1)
+color = Color(0.24780053, 0.24780053, 0.24780053, 1)
 
 [node name="EnemyA*" parent="." instance=ExtResource("2_1bvp3")]
 position = Vector2(-22, -89)
@@ -29,7 +33,7 @@ position = Vector2(106, -143)
 layer = -1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
-color = Color(0.3491902, 0.3491902, 0.3491902, 1)
+color = Color(0.24780053, 0.24780053, 0.24780053, 1)
 metadata/_edit_lock_ = true
 
 [node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
@@ -59,28 +63,6 @@ metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
 
-[node name="Boid" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(56, -46)
-
-[node name="Boid2" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(93, -57)
-
-[node name="Boid3" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(113, -18)
-
-[node name="Boid4" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(66, -95)
-
-[node name="Boid5" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(121, -85)
-
-[node name="Boid6" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(119, -126)
-
-[node name="Boid7" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(174, -55)
-
-[node name="Boid8" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(177, -107)
+[node name="BoidsManager" parent="." instance=ExtResource("7_272bh")]
 
 [connection signal="on_game_over" from="Player" to="." method="game_over"]

@@ -33,7 +33,7 @@ func recalculate_path(_dest):
 	pass
 	
 func update_direction():
-	if(current_path.size() > 1): 
+	if(current_path.size() > 1):  
 		direction = (Map.map_to_global(current_path[1]) - Map.map_to_global(current_path[0])).normalized()
 	else:
 		direction = (Player.position - position).normalized()

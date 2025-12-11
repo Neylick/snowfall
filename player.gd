@@ -6,15 +6,25 @@ var push_dir = Vector2(0,0)
 var was_pushed = false
 @export var PUSH_STRENGH = 700.0
 @onready var anim_sprite = $CollisionShape2D/AnimatedSprite2D
+@onready var light = $PointLight2D
 
 signal on_game_over
 
 var has_control = true
 
+func lose():
+	anim_sprite.play("idle")
+	has_control = false
+	var tween = create_tween().set_parallel()
+	tween.tween_callback(func(): on_game_over.emit())
+	tween.tween_property(anim_sprite, "rotation", TAU, 1).as_relative()
+	tween.tween_property(anim_sprite, "scale", Vector2(0,0), 1)
+
 func get_pushed(dir):
-	was_pushed = true
-	push_dir = dir
+	#was_pushed = true
+	#push_dir = dir
 	#print("got pushed")
+	lose()
 
 func _physics_process(_delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
@@ -38,12 +48,7 @@ func _physics_process(_delta: float) -> void:
 		if(collision):
 			var collider = collision.get_collider()
 			if(collider && (collider.is_in_group("water"))):
-				anim_sprite.play("idle")
-				has_control = false
-				var tween = create_tween().set_parallel()
-				tween.tween_callback(func(): on_game_over.emit())
-				tween.tween_property(anim_sprite, "rotation", TAU, 1).as_relative()
-				tween.tween_property(anim_sprite, "scale", Vector2(0,0), 1)
+				lose()
 		
 
 	

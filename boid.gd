@@ -2,6 +2,7 @@ extends Area2D
 
 @onready var Player = $"/root/Main/Player"
 @onready var Main = $"/root/Main"
+@onready var anim_sprite = $AnimatedSprite2D
 
 @export var max_velocity = 1.2
 @export var min_dist = 20.0
@@ -23,7 +24,8 @@ func _ready() -> void:
 	velocity = (Player.position - position).normalized()
 	
 func _draw() -> void:
-	draw_line(Vector2(0,0), velocity * 10.0, Color.RED)
+	#draw_line(Vector2(0,0), velocity * 10.0, Color.RED)
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -38,6 +40,8 @@ func _process(_delta: float) -> void:
 		velocity = velocity.normalized() * max_velocity
 	
 	position += velocity
+	
+	anim_sprite.flip_h = (velocity.x > 0)
 	
 	queue_redraw()
 
@@ -97,7 +101,8 @@ func moveTowardsPlayer(strength):
 	var dist = diff.length()
 	if(dist > 2):
 		velocity += strength * diff / dist;
-		
+
+# set our velocity away from enemies
 func moveAwayEnemies(maxDist, strength):
 	var diffA = Main.EnemyAStar.position - position
 	var lA = diffA.length()
@@ -107,3 +112,6 @@ func moveAwayEnemies(maxDist, strength):
 	var lB = diffB.length()
 	if(lB <= maxDist):
 		velocity -= strength * diffB / lB
+
+func _on_player_enter(_body: Node2D) -> void:
+	Main.darken()

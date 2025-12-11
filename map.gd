@@ -1,6 +1,6 @@
 extends TileMapLayer
 
-@export var SIZE = 50
+@export var SIZE = 64
 @export var MIN_DIST_TO_PLAYER = 2
 @onready var center = Vector2(SIZE/2.0, SIZE/2.0)
 @onready var WaterMap = $WaterLayer
@@ -18,6 +18,12 @@ func global_to_map(coord : Vector2) -> Vector2i :
 
 func map_to_global(coord : Vector2) -> Vector2 :
 	return (coord - center) * Vector2(tile_set.tile_size)
+	
+func get_random_spawn() -> Vector2:
+	var res = Vector2i(0,0)
+	while res.distance_squared_to(Vector2i(0,0)) <= 3 || !is_cell_walkable(res):
+		res = Vector2i((int)(randf() * SIZE), (int)(randf() * SIZE))
+	return Vector2(res) + Vector2(.5, .5)
 	
 func set_water(coords : Vector2i) :
 	erase_cell(coords)

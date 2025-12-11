@@ -2,7 +2,7 @@ extends Enemy
 
 func _ready() -> void:
 	color = Color.AQUA
-	anim_sprite = $CollisionShape2D/AnimatedSprite2D
+	anim_sprite = $AnimatedSprite2D
 
 func get_lowest_cost(open_list : Dictionary, fscore : Dictionary):
 	var min_v = 1e30

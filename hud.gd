@@ -30,4 +30,4 @@ func _on_hud_timer_timeout() -> void:
 func _process(delta: float) -> void:
 	if(!pause_timer):
 		timer += delta
-		$TimerText.text = "%02d:%02d.%02d" % [int(timer/60), int(timer), int(timer*100)%100]
+		$TimerText.text = "%02d:%02d.%02d" % [int(timer/60), int(timer)%60, int(timer*100)%100]

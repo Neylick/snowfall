@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://djuvpfiophum" path="res://enemy_a_star.gd" id="1_djgpo"]
 [ext_resource type="Texture2D" uid="uid://i3t5pkuin553" path="res://Art/player_tilemap.png" id="1_nfsfc"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nfsfc"]
-size = Vector2(11.5, 10.5)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjmsk"]
 atlas = ExtResource("1_nfsfc")
 region = Rect2(75, 0, 24, 24)
@@ -52,6 +49,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nfsfc"]
+size = Vector2(8.75, 8.25)
+
 [sub_resource type="Gradient" id="Gradient_djgpo"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
@@ -65,30 +65,30 @@ fill_to = Vector2(0.7905983, 0.16239317)
 
 [node name="EnemyA*" type="CharacterBody2D" groups=["enemy"]]
 z_index = -1
-collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_djgpo")
 
 [node name="Label" type="Label" parent="."]
 texture_filter = 2
 offset_left = -4.0
-offset_top = -30.0
+offset_top = -20.0
 offset_right = 35.0
-offset_bottom = 15.0
+offset_bottom = 25.0
 scale = Vector2(0.25, 0.25)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
 text = "A*"
 horizontal_alignment = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2.25, -8.75)
-shape = SubResource("RectangleShape2D_nfsfc")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-2.25, -3.25)
+position = Vector2(-1, -3)
 sprite_frames = SubResource("SpriteFrames_3mgt2")
 animation = &"walk"
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nfsfc")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(0, -10)
